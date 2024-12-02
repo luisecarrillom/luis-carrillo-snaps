@@ -1,0 +1,112 @@
+body {
+  font-family: "Newsreader", serif;
+  background-color: #eef7f2;
+}
+
+.component__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: white;
+}
+.component__header h1 {
+  font-size: 24px;
+}
+.component__header .component__filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #2a4d43;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.component__header .component__filter-toggle svg {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}
+.component__header .component__filter-toggle:hover {
+  background-color: #1f3a32;
+}
+.component__mission {
+  text-align: center;
+  font-size: 16px;
+  margin: 20px;
+  color: #2a4d43;
+}
+.component__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+.component__filters .component__filter-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  background-color: #d8ebe4;
+  color: #2a4d43;
+  cursor: pointer;
+}
+.component__filters .component__filter-button.active {
+  background-color: #2a4d43;
+  color: white;
+}
+.component__filters .component__filter-button:hover {
+  background-color: #c0ddd1;
+}
+.component__gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+.component__gallery .component__photo-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.component__gallery .component__photo-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.component__gallery .component__photo-card .component__photo-footer {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.component__gallery .component__photo-card .component__photo-footer .component__tag {
+  display: inline-block;
+  margin-right: 5px;
+  background-color: #d8ebe4;
+  padding: 2px 5px;
+  border-radius: 3px;
+}
+.component__gallery .component__photo-card .component__photo-footer .component__author {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #555;
+}
+.component__footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: white;
+  border-top: 1px solid #ccc;
+}
+.component__footer .component__social img {
+  margin-right: 10px;
+}
+.component__footer p {
+  margin: 0;
+  font-size: 12px;
+}/*# sourceMappingURL=ComponentName.css.map */
