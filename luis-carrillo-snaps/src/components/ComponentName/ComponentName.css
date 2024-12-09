@@ -1,112 +1,286 @@
 body {
-  font-family: "Newsreader", serif;
-  background-color: #eef7f2;
+  font-family: "Newsreader", "Outfit", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #effaf7;
+  color: #0c1e1a;
 }
 
+.component {
+  padding: 16px;
+}
 .component__header {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  background-color: white;
+  align-items: center;
 }
-.component__header h1 {
-  font-size: 24px;
+.component__header .component__title {
+  font-family: "Newsreader", serif;
+  font-size: 2.75rem;
+  font-weight: 400;
+  color: #0c1e1a;
+  text-decoration: none;
+  margin: 0;
+}
+@media (min-width: 768px) {
+  .component__header .component__title {
+    font-size: 2.5rem;
+  }
+}
+@media (min-width: 1280px) {
+  .component__header .component__title {
+    font-size: 3rem;
+  }
 }
 .component__header .component__filter-toggle {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
-  background-color: #2a4d43;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  background-color: #ffffff;
+  color: #1e6655;
+  border: 2px solid #1e6655;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border-radius: 20px;
   cursor: pointer;
 }
-.component__header .component__filter-toggle svg {
-  width: 16px;
-  height: 16px;
-  fill: white;
-}
 .component__header .component__filter-toggle:hover {
-  background-color: #1f3a32;
+  background-color: #effaf7;
+}
+.component__header .component__filter-toggle--active {
+  background-color: #1e6655;
+  color: #ffffff;
+}
+.component__header .component__filter-toggle--active .filter-icon {
+  fill: #ffffff;
+}
+.component__header .component__filter-toggle .filter-icon {
+  width: 20px;
+  height: 20px;
+  fill: #1e6655;
+  transition: fill 0.2s;
 }
 .component__mission {
+  background-color: #effaf7;
+  padding: 16px;
+}
+.component__mission p {
+  font-family: "Newsreader", serif;
   text-align: center;
-  font-size: 16px;
-  margin: 20px;
-  color: #2a4d43;
+}
+.component__mission p strong {
+  font-size: 14px;
+}
+.component__mission p em {
+  font-style: italic;
+}
+@media (max-width: 767px) {
+  .component__mission p {
+    font-size: 18px;
+    line-height: 26px;
+    margin-bottom: 20px;
+  }
+  .component__mission p strong {
+    font-size: 14px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .component__mission p {
+    font-size: 24px;
+    line-height: 34px;
+    margin-bottom: 20px;
+  }
+  .component__mission p strong {
+    font-size: 16px;
+  }
+}
+@media (min-width: 1280px) {
+  .component__mission {
+    text-align: left;
+  }
+  .component__mission p {
+    font-size: 36px;
+    line-height: 46px;
+    margin-bottom: 20px;
+  }
+  .component__mission p strong {
+    font-size: 18px;
+  }
 }
 .component__filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  padding: 20px;
-  background-color: #f5f5f5;
+  gap: 8px;
+  margin-bottom: 16px;
+  background-color: #e4efec;
+  padding: 16px;
+  border-radius: 4px;
 }
-.component__filters .component__filter-button {
-  padding: 10px 15px;
-  border: none;
+.component__filters .component__filter {
+  background-color: #ffffff;
+  color: #1e6655;
+  border: 1px solid #b7cec9;
+  padding: 8px 16px;
   border-radius: 20px;
-  background-color: #d8ebe4;
-  color: #2a4d43;
   cursor: pointer;
 }
-.component__filters .component__filter-button.active {
-  background-color: #2a4d43;
-  color: white;
+.component__filters .component__filter:hover {
+  background-color: #effaf7;
 }
-.component__filters .component__filter-button:hover {
-  background-color: #c0ddd1;
+.component__filters .component__filter--active {
+  background-color: #1e6655;
+  color: #ffffff;
 }
 .component__gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 .component__gallery .component__photo-card {
-  position: relative;
+  flex: 1 1 100%;
+  background: white;
+  border-radius: 8px;
   overflow: hidden;
-  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .component__gallery .component__photo-card img {
   width: 100%;
   height: auto;
-  display: block;
 }
-.component__gallery .component__photo-card .component__photo-footer {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 5px 10px;
-  border-radius: 5px;
+.component__gallery .component__photo-card .component__photo-info {
+  padding: 8px;
+  background-color: #1e6655;
+  color: white;
+  text-align: right;
+  font-size: 0.9rem;
 }
-.component__gallery .component__photo-card .component__photo-footer .component__tag {
-  display: inline-block;
-  margin-right: 5px;
-  background-color: #d8ebe4;
-  padding: 2px 5px;
-  border-radius: 3px;
+.component__gallery .component__photo-card .component__photo-tags {
+  padding: 8px;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
 }
-.component__gallery .component__photo-card .component__photo-footer .component__author {
-  display: block;
-  margin-top: 5px;
-  font-size: 12px;
-  color: #555;
+.component__gallery .component__photo-card .component__photo-tags .tag {
+  background-color: #b7cec9;
+  color: #0c1e1a;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.component__gallery .component__photo-card .component__photo-tags .tag.tag--active {
+  background-color: #1e6655;
+  color: #ffffff;
 }
 .component__footer {
+  background-color: #effaf7;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+.component__footer-content {
   display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  background-color: white;
-  border-top: 1px solid #ccc;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
 }
-.component__footer .component__social img {
-  margin-right: 10px;
+@media (min-width: 48rem) {
+  .component__footer-content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    text-align: left;
+  }
 }
-.component__footer p {
-  margin: 0;
-  font-size: 12px;
+.component__footer .footer__title {
+  font-family: "Newsreader", serif;
+  font-size: 1.5rem;
+  line-height: 1.875rem;
+  font-weight: 400;
+  color: #0c1e1a;
+}
+@media (min-width: 48rem) {
+  .component__footer .footer__title {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+  }
+}
+.component__footer .footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+@media (min-width: 48rem) {
+  .component__footer .footer__links {
+    flex-direction: row;
+    gap: 3rem;
+  }
+}
+.component__footer .footer__links .footer__column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.component__footer .footer__links .footer__column p {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.09375rem;
+  font-weight: 500;
+  color: #0c1e1a;
+}
+.component__footer .footer__links .footer__column p:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+@media (min-width: 48rem) {
+  .component__footer .footer__links .footer__column p {
+    font-size: 1.125rem;
+    line-height: 1.4375rem;
+  }
+}
+.component__footer .footer__social-icons {
+  display: flex;
+  gap: 1rem;
+}
+.component__footer .footer__social-icons a img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.component__footer .footer__social-icons a img:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+.component__footer .footer__bottom {
+  margin-top: 1rem;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.75rem;
+  line-height: 0.9375rem;
+  font-weight: 300;
+  color: #0c1e1a;
+}
+@media (min-width: 48rem) {
+  .component__footer .footer__bottom {
+    font-size: 0.875rem;
+    line-height: 1.09375rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .component__gallery .component__photo-card {
+    flex: 1 1 calc(50% - 16px);
+  }
+}
+@media (min-width: 1280px) {
+  .component__content {
+    display: flex;
+    justify-content: space-between;
+  }
+  .component__content .component__mission {
+    flex: 2;
+    text-align: left;
+  }
+  .component__content .component__filters {
+    flex: 1;
+    max-width: 300px;
+  }
+  .component__gallery .component__photo-card {
+    flex: 1 1 calc(33.333% - 16px);
+  }
 }/*# sourceMappingURL=ComponentName.css.map */

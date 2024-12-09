@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // Importar Link de react-router-dom
 import photos from "../../data/photos.json";
 import tags from "../../data/tags.json";
 import FilterIcon from "../../assets/images/Filter.svg";
@@ -22,9 +23,10 @@ const ComponentName = () => {
 
   return (
     <div className="component">
-
       <header className="component__header">
-        <h1>Snaps</h1>
+      <Link to="/" className="component__title">
+    Snaps
+  </Link>
         <button
           className={`component__filter-toggle ${
             isFilterOpen ? "component__filter-toggle--active" : ""
@@ -68,7 +70,11 @@ const ComponentName = () => {
 
       <div className="component__gallery">
         {filteredPhotos.map((photo) => (
-          <div key={photo.id} className="component__photo-card">
+          <Link
+            key={photo.id}
+            to={`/photo/${photo.id}`} // Redirige a la página de foto individual
+            className="component__photo-card"
+          >
             <img src={photo.photo} alt={photo.photoDescription} />
             <div className="component__photo-info">{photo.photographer}</div>
             <div className="component__photo-tags">
@@ -83,7 +89,7 @@ const ComponentName = () => {
                 </span>
               ))}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
@@ -126,3 +132,4 @@ const ComponentName = () => {
 };
 
 export default ComponentName;
+
