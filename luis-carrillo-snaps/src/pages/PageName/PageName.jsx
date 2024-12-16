@@ -2,40 +2,43 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import "./PageName.scss";
+
 import FacebookIcon from "../../assets/images/Facebook.svg";
 import InstagramIcon from "../../assets/images/Instagram.svg";
 import TwitterIcon from "../../assets/images/X_twitter.svg";
 import PinterestIcon from "../../assets/images/Pinterest.svg";
-import ArrowIcon  from "../../assets/images/Arrow.svg";
-import LikeIcon from "../../assets/Images/Like_Outline.svg";
+import ArrowIcon from "../../assets/images/Arrow.svg";
+import LikeIcon from "../../assets/images/Like_Outline.svg";
 
 const PageName = () => {
-  const { id } = useParams();
+  const { id } = useParams(); 
   const [photo, setPhoto] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({ name: "", comment: "" });
 
-  const API_KEY = "81680b1b-4c54-48fe-8a89-4df9532936a8"; 
+
+  const fetchPhotoData = async () => {
+    try {
+ 
+      const photoResponse = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/photos/${id}`
+      );
+      setPhoto(photoResponse.data);
+
+   
+      const commentsResponse = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/photos/${id}/comments`
+      );
+      setComments(commentsResponse.data || []); 
+    } catch (error) {
+      console.error("Error fetching photo data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchPhotoData = async () => {
-      try {
-        const photoResponse = await axios.get(
-          `https://unit-3-project-c5faaab51857.herokuapp.com/photos/${id}?api_key=${API_KEY}`
-        );
-        setPhoto(photoResponse.data);
-
-        const commentsResponse = await axios.get(
-          `https://unit-3-project-c5faaab51857.herokuapp.com/photos/${id}/comments?api_key=${API_KEY}`
-        );
-        setComments(commentsResponse.data);
-      } catch (error) {
-        console.error("Error fetching photo data:", error);
-      }
-    };
-
     fetchPhotoData();
   }, [id]);
+
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -46,12 +49,13 @@ const PageName = () => {
 
     try {
       const response = await axios.post(
-        `https://unit-3-project-c5faaab51857.herokuapp.com/photos/${id}/comments?api_key=${API_KEY}`,
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/photos/${id}/comments`,
         newComment,
         { headers: { "Content-Type": "application/json" } }
       );
-      setComments([response.data, ...comments]);
-      setNewComment({ name: "", comment: "" });
+
+      setComments([...comments, response.data]); 
+      setNewComment({ name: "", comment: "" }); 
     } catch (error) {
       console.error("Error submitting comment:", error);
     }
@@ -63,21 +67,25 @@ const PageName = () => {
 
   return (
     <div className="page">
-      
+
       <header className="page__header">
-  <Link to="/">
-    <h1>Snaps</h1> 
-  </Link>
-  <Link to="/" className="page__home-link">
-    <img src={ArrowIcon} alt="Arrow" className="page__arrow-icon" />
-    <span className="page__home-text">Home</span>
-  </Link>
-</header>
+        <Link to="/">
+          <h1>Snaps</h1>
+        </Link>
+        <Link to="/" className="page__home-link">
+          <img src={ArrowIcon} alt="Arrow" className="page__arrow-icon" />
+          <span className="page__home-text">Home</span>
+        </Link>
+      </header>
 
 
- <div className="page__content">
+      <div className="page__content">
         <div className="page__photo-container">
-          <img src={photo.photo} alt={photo.photoDescription} className="page__photo" />
+          <img
+            src={`${import.meta.env.VITE_REACT_APP_API_URL}/api/${photo.photo}`}
+            alt={photo.photoDescription}
+            className="page__photo"
+          />
           <div className="page__photo-details">
             <p>
               <strong>Photo by {photo.photographer}</strong>
@@ -88,7 +96,7 @@ const PageName = () => {
               {photo.likes} likes
             </p>
             <div className="page__tags">
-              {photo.tags.map((tag, index) => (
+              {photo.tags?.map((tag, index) => (
                 <span key={index} className="page__tag">
                   {tag}
                 </span>
@@ -99,37 +107,45 @@ const PageName = () => {
       </div>
 
       <div className="page__comments">
-    <h3>{comments.length} Comments</h3>
-    <form onSubmit={handleCommentSubmit} className="page__comment-form">
-        <label htmlFor="name">Name</label>
-        <input
+        <h3>{comments.length} Comments</h3>
+        <form onSubmit={handleCommentSubmit} className="page__comment-form">
+          <label htmlFor="name">
+            <strong>Name</strong>
+          </label>
+          <input
             id="name"
             type="text"
             placeholder="Name"
             value={newComment.name}
-            onChange={(e) => setNewComment({ ...newComment, name: e.target.value })}
-        />
-        <label htmlFor="comment">Comment</label>
-        <textarea
+            onChange={(e) =>
+              setNewComment({ ...newComment, name: e.target.value })
+            }
+          />
+          <label htmlFor="comment">
+            <strong>Comment</strong>
+          </label>
+          <textarea
             id="comment"
             placeholder="Comment"
             value={newComment.comment}
-            onChange={(e) => setNewComment({ ...newComment, comment: e.target.value })}
-        ></textarea>
-        <button type="submit">Submit</button>
-    </form>
-    <ul className="page__comment-list">
-        {comments.map((comment) => (
+            onChange={(e) =>
+              setNewComment({ ...newComment, comment: e.target.value })
+            }
+          ></textarea>
+          <button type="submit">Submit</button>
+        </form>
+        <ul className="page__comment-list">
+          {comments.map((comment) => (
             <li key={comment.id} className="page__comment">
-                <p>
-                    <strong>{comment.name}</strong>{" "}
-                    {new Date(comment.timestamp).toLocaleDateString()}
-                </p>
-                <p>{comment.comment}</p>
+              <p>
+                <strong>{comment.name}</strong>{" "}
+                {new Date(comment.timestamp).toLocaleDateString()}
+              </p>
+              <p>{comment.comment}</p>
             </li>
-        ))}
-    </ul>
-</div>
+          ))}
+        </ul>
+      </div>
 
       <footer className="component__footer">
         <div className="component__footer-content">
@@ -168,5 +184,5 @@ const PageName = () => {
     </div>
   );
 };
-console.log("test");
+
 export default PageName;
