@@ -11,25 +11,20 @@ import ArrowIcon from "../../assets/images/Arrow.svg";
 import LikeIcon from "../../assets/images/Like_Outline.svg";
 
 const PageName = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [photo, setPhoto] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({ name: "", comment: "" });
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
   const fetchPhotoData = async () => {
     try {
- 
-      const photoResponse = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/api/photos/${id}`
-      );
+      const photoResponse = await axios.get(`${API_URL}/photos/${id}`);
       setPhoto(photoResponse.data);
 
-   
-      const commentsResponse = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/api/photos/${id}/comments`
-      );
-      setComments(commentsResponse.data || []); 
+      const commentsResponse = await axios.get(`${API_URL}/photos/${id}/comments`);
+      setComments(commentsResponse.data || []);
     } catch (error) {
       console.error("Error fetching photo data:", error);
     }
@@ -38,7 +33,6 @@ const PageName = () => {
   useEffect(() => {
     fetchPhotoData();
   }, [id]);
-
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -49,13 +43,13 @@ const PageName = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/api/photos/${id}/comments`,
+        `${API_URL}/photos/${id}/comments`,
         newComment,
         { headers: { "Content-Type": "application/json" } }
       );
 
-      setComments([...comments, response.data]); 
-      setNewComment({ name: "", comment: "" }); 
+      setComments([...comments, response.data]);
+      setNewComment({ name: "", comment: "" });
     } catch (error) {
       console.error("Error submitting comment:", error);
     }
@@ -67,7 +61,6 @@ const PageName = () => {
 
   return (
     <div className="page">
-
       <header className="page__header">
         <Link to="/">
           <h1>Snaps</h1>
@@ -78,11 +71,10 @@ const PageName = () => {
         </Link>
       </header>
 
-
       <div className="page__content">
         <div className="page__photo-container">
           <img
-            src={`${import.meta.env.VITE_REACT_APP_API_URL}/api/${photo.photo}`}
+            src={`${API_URL}/photos/${photo.photo}`}
             alt={photo.photoDescription}
             className="page__photo"
           />
